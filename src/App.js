@@ -55,13 +55,16 @@ const App = () => {
   );
 };
 
-const Pizza = () => {
+const Pizza = ({pizzaObj}) => {
   return (
-    <div>
-      <img src="pizzas/spinaci.jpg" alt="spinaci" />
-      <h3>Pizza Spinaci</h3>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-    </div>
+    <li className="pizza">
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
+      <div>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price}</span>
+      </div>
+    </li>
   );
 };
 
@@ -76,22 +79,56 @@ const Menu = () => {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <Pizza />
-      <Pizza />
-      <Pizza />
+      <p>
+        Authentic Italian cuisine. 6 creative dishes to choose from. All from
+        our stone oven, all organic, all delicious.
+      </p>
+      {pizzaData.length > 0 ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza, key) => {
+            return <Pizza pizzaObj={pizza} key={key} />;
+          })}
+        </ul>
+      ) : (
+        <p>we're still working on our menu. Please come back later</p>
+      )}
     </main>
   );
 };
+
+const Order = ({closeHour, openHour}
+) => {
+  return (
+    <div className="order">
+      <p>We're open from {openHour}:00 to {closeHour}:00. Come visit us or order online.</p>
+      <button className="btn">Order</button>
+    </div>
+  );
+};
+
 const Footer = () => {
   const openHour = 12;
   const closeHour = 22;
   const hour = new Date().getHours();
   const isOpen = hour >= openHour && hour <= closeHour;
-  console.log(isOpen);
-
+  /*
+  if (!isOpen) {
+    return (
+      <p>
+        We're happy to serve you between {openHour}:00 and {closeHour}:00.
+      </p>
+    );
+  }
+  */
   return (
     <footer className="footer">
-      We're open from 12:00 to 22:00. Come visit us or order online.
+      {isOpen ? (
+        <Order closeHour={closeHour} openHour={openHour}/>
+      ) : (
+        <p>
+          We're happy to serve you between {openHour}:00 and {closeHour}:00.
+        </p>
+      )}
     </footer>
   );
 
