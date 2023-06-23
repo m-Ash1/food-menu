@@ -55,14 +55,14 @@ const App = () => {
   );
 };
 
-const Pizza = ({pizzaObj}) => {
+const Pizza = ({ pizzaObj }) => {
   return (
-    <li className="pizza">
+    <li className={`pizza${pizzaObj.soldOut ? "sold-out" : ""}`}>
       <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
         <h3>{pizzaObj.name}</h3>
         <p>{pizzaObj.ingredients}</p>
-        <span>{pizzaObj.price}</span>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -96,11 +96,13 @@ const Menu = () => {
   );
 };
 
-const Order = ({closeHour, openHour}
-) => {
+const Order = ({ closeHour, openHour }) => {
   return (
     <div className="order">
-      <p>We're open from {openHour}:00 to {closeHour}:00. Come visit us or order online.</p>
+      <p>
+        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+        online.
+      </p>
       <button className="btn">Order</button>
     </div>
   );
@@ -123,7 +125,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       {isOpen ? (
-        <Order closeHour={closeHour} openHour={openHour}/>
+        <Order closeHour={closeHour} openHour={openHour} />
       ) : (
         <p>
           We're happy to serve you between {openHour}:00 and {closeHour}:00.
